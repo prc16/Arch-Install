@@ -8,9 +8,9 @@ mkfs.fat -F 32 /dev/efi_system_partition
 mkswap /dev/swap_partition  
 swapon /dev/swap_partition  
 
-mkfs.btrfs -L arch /dev/sda3  
+mkfs.btrfs -L arch /dev/sda2  
 
-mount /dev/sda3 /mnt  
+mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache=v2 /dev/sda2 /mnt  
 
 btrfs subvolume create /mnt/subvol_root  
 btrfs subvolume create /mnt/subvol_var  
@@ -19,12 +19,12 @@ btrfs subvolume create /mnt/subvol_home
 
 umount /mnt  
 
-mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache,subvol=subvol_root /dev/sda3 /mnt  
+mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache=v2,subvol=subvol_root /dev/sda2 /mnt  
 ### You need to manually create folder to mount the other subvolumes at  
 mkdir /mnt/{efi,home,var,tmp,toplevel}  
-mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache,subvol=subvol_home    /dev/sda3 /mnt/home  
-mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache,subvol=subvol_var     /dev/sda3 /mnt/var  
-mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache,subvol=/              /dev/sda3 /mnt/toplevel  
+mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache=v2,subvol=subvol_home    /dev/sda2 /mnt/home  
+mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache=v2,subvol=subvol_var     /dev/sda2 /mnt/var  
+mount -o noatime,commit=120,compress=zstd,autodefrag,space_cache=v2,subvol=/              /dev/sda2 /mnt/toplevel  
 
 ### Mounting the boot partition at /boot folder  
 mount /dev/sda1 /mnt/efi  
