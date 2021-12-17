@@ -51,7 +51,7 @@ locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf  
 
 ### Network configuration
-echo "prc16arch" >> /etc/hostname 
+echo "myhostname" >> /etc/hostname 
 vim /etc/hosts  
 >127.0.0.1        localhost  
 >::1              localhost  
@@ -72,14 +72,15 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg  
 
 ## System administration
-useradd -mG wheel prc16  
-passwd prc16  
+useradd -mG wheel myusername  
+passwd myusername  
 EDITOR=vim visudo  
 
 ## Create a snapshot
-btrfs subvolume snapshot -r / "/toplevel/subvol_root_snapshot_ro_fresh"  
+btrfs subvolume snapshot -r / "/toplevel/subvol_root_01_fresh_install"  
 
 ### Regenareate gurb config
 grub-mkconfig -o /boot/grub/grub.cfg  
 
 ## Reboot
+reboot  
