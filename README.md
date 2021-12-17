@@ -71,16 +71,13 @@ mkinitcpio -P
 grub-install --target=x86_64-efi --efi-directory=/boot/efi  
 grub-mkconfig -o /boot/grub/grub.cfg  
 
+## Create a snapshot
+btrfs subvolume snapshot -r / "/toplevel/subvol_root_01_fresh_install"  
+
 ## System administration
 useradd -mG wheel myusername  
 passwd myusername  
 EDITOR=vim visudo  
-
-## Create a snapshot
-btrfs subvolume snapshot -r / "/toplevel/subvol_root_01_fresh_install"  
-
-### Regenareate gurb config
-grub-mkconfig -o /boot/grub/grub.cfg  
 
 ## Reboot
 reboot  
