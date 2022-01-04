@@ -1,3 +1,4 @@
 smartctl -a device  
 mkfs.ext4 -F -b 4096 /dev/device  
 LC_ALL=C fdisk -l /dev/sdX | grep 'Sector size'  
+hdparm --set-sector-size 4096 --please-destroy-my-drive /dev/sdX  
